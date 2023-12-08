@@ -18,10 +18,7 @@ public interface PortfolioManager {
 
   //CHECKSTYLE:OFF
 
-
   List<AnnualizedReturn> calculateAnnualizedReturn(List<PortfolioTrade> portfolioTrades,
-      LocalDate endDate)
-      throws StockQuoteServiceException, JsonProcessingException
-  ;
+      LocalDate endDate) throws StockQuoteServiceException, JsonProcessingException;
 }
 
