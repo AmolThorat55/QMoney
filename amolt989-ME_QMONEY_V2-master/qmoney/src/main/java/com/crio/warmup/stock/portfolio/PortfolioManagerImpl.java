@@ -123,23 +123,13 @@ private StockQuotesService stockQuotesService;
 
         for(int i= 0; i<portfolioTrades.size(); i++){
           PortfolioTrade trade = portfolioTrades.get(i); 
-        // final List<Candle> candles;
-          //try{
-           // final List<Candle> candles = new ArrayList<>();
-         // candles = getStockQuote(trade.getSymbol(), trade.getPurchaseDate(), endDate);
-         // AnnualizedReturn annualizedReturn = calculateAnnualizedReturns(endDate, portfolioTrade,
-         //   getOpeningPriceOnStartDate(candles), getClosingPriceOnEndDate(candles));
-            Callable<AnnualizedReturn> callableTask = ()-> {
+          Callable<AnnualizedReturn> callableTask = ()-> {
               List<Candle> candles = getStockQuote(trade.getSymbol(), trade.getPurchaseDate(), endDate);
-              return calculateAnnualizedReturns(endDate, trade,
-              getOpeningPriceOnStartDate(candles), getClosingPriceOnEndDate(candles));
+              return calculateAnnualizedReturns(endDate, trade, getOpeningPriceOnStartDate(candles), 
+              getClosingPriceOnEndDate(candles));
             };
             Future<AnnualizedReturn> futureReturns = pool.submit(callableTask);
             futureReturnsList.add(futureReturns);
-
-      //   }catch(ExecutionException e){
-      //   throw new StockQuoteServiceException("Error while calling Future API", e);
-      // }
     }
 
         for(Future<AnnualizedReturn> future : futureReturnsList){
@@ -149,82 +139,15 @@ private StockQuotesService stockQuotesService;
                  throw new StockQuoteServiceException( e.getMessage());   
                        
         }
-
-        // for(int j = 0; j<portfolioTrades.size(); j++){
-        //   Future<AnnualizedReturn> futureReturns = futureReturnsList.get(j);
-        //   try{
-        //     AnnualizedReturn returnAReturn = futureReturns.get();
-        //   annualizedReturns.add(returnAReturn);
-        //   }catch(ExecutionException e){
-        //     throw new StockQuoteServiceException("Error while calling Future API", e);
-        //   }
-        // }
         Collections.sort(annualizedReturns, getComparator());
         pool.shutdown();
-       
-  }   return annualizedReturns; 
+    }   
+        return annualizedReturns; 
       }
     }
 
 
-//CHECKSTYLE:OFF
+ 
 
-  // TODO: CRIO_TASK_MODULE_REFACTOR
-  //  Extract the logic to call Tiingo third-party APIs to a separate function.
-  //  Remember to fill out the buildUri function and use that.
-
-
-  // public List<Candle> getStockQuote(String symbol, LocalDate from, LocalDate to)
-  //     throws JsonProcessingException {
-  //       if(from.compareTo(to)>=0)
-  //       throw new RuntimeException();
-
-  //       String uri = buildUri(symbol, from, to);
-  //       TiingoCandle[] candleList = restTemplate.getForObject(uri, TiingoCandle[].class);
-  //       List<Candle> stockList = Arrays.asList(candleList);
-  //    return stockList;
-  // }
-
-  // @Override
-  // public List<AnnualizedReturn> calculateAnnualizedReturn(List<PortfolioTrade> portfolioTrades,
-  //     LocalDate endDate) {
-  //       // return portfolioTrades.stream().map(trade ->{
-  //       //   try{
-  //       //   List<Candle> candles = getStockQuote(trade.getSymbol(),trade.getPurchaseDate(), endDate);
-    
-  //       //   double openPrice = candles.get(0).getOpen();
-  //       //   double closePrice = candles.get(candles.size()-1).getClose();
-  //       //   AnnualizedReturn annualizedReturns = calculateSingleAnnualizedReturns(endDate, trade, openPrice, closePrice);
-  //       //   return  (List<AnnualizedReturn>) annualizedReturns;
-  //       //   }catch(JsonProcessingException e){
-  //       //     return new AnnualizedReturntrade.getSymbol(),Double.NaN,Double.NaN);
-  //       //   }
-  //       // }).sorted(Comparator.comparing(AnnualizedReturn :: getAnnualizedReturn).reversed()).collect(Collectors.toList());
-  //      List<AnnualizedReturn> list = new ArrayList<AnnualizedReturn>();
-  //       for(PortfolioTrade trade : portfolioTrades){
-         
-  //           AnnualizedReturn annualizedReturns = calculateSingleAnnualizedReturns(endDate, trade);
-  //          list.add(annualizedReturns);
-             
-  //       }
-  //       Collections.sort(list,getComparator());
-  //       return list;
-  // }
-
-  // public  AnnualizedReturn calculateSingleAnnualizedReturns(LocalDate endDate,
-  // PortfolioTrade trade) {
-  //   try{
-  //   List<Candle> candles = getStockQuote(trade.getSymbol(),trade.getPurchaseDate(), endDate);
-    
-  //   double openPrice = candles.get(0).getOpen();
-  //   double closePrice = candles.get(candles.size()-1).getClose();
-  //   double totalReturn =  (closePrice - openPrice) / openPrice ;
-  //   double numYears = ChronoUnit.DAYS.between(trade.getPurchaseDate(), endDate) / 365.24; 
-  //   double annualizedReturns = Math.pow((1 + totalReturn), (1 / numYears) ) - 1 ;
-  //   return new AnnualizedReturn(trade.getSymbol(), annualizedReturns, totalReturn);
-  //   }catch(JsonProcessingException e){
-  //    return new AnnualizedReturn(trade.getSymbol(),Double.NaN,Double.NaN);
-  //   }
-  // }
 
  
