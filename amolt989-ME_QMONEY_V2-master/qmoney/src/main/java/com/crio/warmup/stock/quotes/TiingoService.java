@@ -45,24 +45,14 @@ public class TiingoService implements StockQuotesService {
         try {
           candleobj=objmapper.readValue(apiresponse, TiingoCandle[].class);
         } catch (JsonMappingException e) {
-          // TODO Auto-generated catch block
           e.printStackTrace();
         } catch (JsonProcessingException e) {
-          // TODO Auto-generated catch block
           e.printStackTrace();
         }
-        
         if(candleobj==null){
-        
-          return new ArrayList<>();
-          
+          return new ArrayList<>(); 
         }
-  
         return Arrays.asList(candleobj);
-        
-  
-
-
       }
 
 
