@@ -11,11 +11,6 @@ public class PortfolioManagerFactory {
   //  Implement the method to return new instance of PortfolioManager.
   //  Remember, pass along the RestTemplate argument that is provided to the new instance.
 
-  // public static PortfolioManager getPortfolioManager(RestTemplate restTemplate) {
-
-  //    return new PortfolioManagerImpl(restTemplate);
-  // }
-
   public static PortfolioManager getPortfolioManager(RestTemplate restTemplate) {
     return new PortfolioManagerImpl(restTemplate);
   }
@@ -28,7 +23,6 @@ public class PortfolioManagerFactory {
   //    2. Mark the earlier constructor of PortfolioManager as @Deprecated.
   //    3. Make sure all of the tests pass by using the gradle command below:
   //       ./gradlew test --tests PortfolioManagerFactory
-
 
    public static PortfolioManager getPortfolioManager(String provider,
      RestTemplate restTemplate) {
