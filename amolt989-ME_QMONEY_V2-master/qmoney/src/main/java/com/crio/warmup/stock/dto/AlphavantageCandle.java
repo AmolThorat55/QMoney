@@ -23,17 +23,8 @@ public class AlphavantageCandle implements Candle {
   @JsonProperty("4. close")
   private Double close;
 
-  // @JsonProperty("1. open")
-  // private Double open;
-  // @JsonProperty("1. close")
-  // private Double close;
-  // @JsonProperty("1. high")
-  // private Double high;
-  // @JsonProperty("1. low")
-  // private Double low;
   @JsonIgnore
   private LocalDate date;
-
 
   @Override
   public Double getOpen() {
